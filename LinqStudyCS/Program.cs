@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-//とりあえず最初はLinqなしで
-//using System.Linq; 
+using System.Linq; 
 using System.Text;
 using System.Threading.Tasks;
 
@@ -75,66 +74,6 @@ namespace LinqStudyCS
                 a = b;
                 b = a + temp;
             }
-        }
-
-    }
-
-    /// <summary>
-    /// 拡張メソッドを定義するクラス
-    /// </summary>
-    static class ExtentionMethods
-    {
-        /// <summary>
-        /// 終了条件を設定するメソッド
-        /// </summary>
-        /// <param name="source">元数列</param>
-        /// <param name="predicate">終了条件</param>
-        /// <returns>終了条件が設定された数列</returns>
-        public static IEnumerable<int> TakeWhile(this IEnumerable<int> source, Func<int, bool> predicate)
-        {
-            foreach (var i in source)
-            {
-                if (predicate(i))
-                {
-                    yield return i;
-                }
-                else
-                {
-                    break;
-                }
-            }
-        }
-
-        /// <summary>
-        /// 抽出条件を設定するメソッド
-        /// </summary>
-        /// <param name="source">元数列</param>
-        /// <param name="predicate">抽出条件</param>
-        /// <returns>抽出条件が設定された数列</returns>
-        public static IEnumerable<int> Where(this IEnumerable<int> source, Func<int, bool> predicate)
-        {
-            foreach (var i in source)
-            {
-                if (predicate(i))
-                {
-                    yield return i;
-                }
-            }
-        }
-
-        /// <summary>
-        /// 合計を求めるメソッド
-        /// </summary>
-        /// <param name="source">元数列</param>
-        /// <returns>合計</returns>
-        public static int Sum(this IEnumerable<int> source)
-        {
-            int sum = 0;
-            foreach (var i in source)
-            {
-                sum += i;
-            }
-            return sum;
         }
 
     }
