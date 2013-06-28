@@ -25,18 +25,11 @@ namespace LinqStudyCS
         public static int Problem1(int limit)
         {
             int sum = 0;
-            foreach (var i in GetNaturalNumber())
+            foreach (var i in TakeWhile(GetNaturalNumber(), x => x < limit))
             {
-                if (i < limit)
+                if (i % 3 == 0 || i % 5 == 0)
                 {
-                    if (i % 3 == 0 || i % 5 == 0)
-                    {
-                        sum += i;
-                    }
-                }
-                else
-                {
-                    break;
+                    sum += i;
                 }
             }
             return sum;
@@ -54,18 +47,11 @@ namespace LinqStudyCS
         public static int Problem2(int limit)
         {
             int sum = 0;
-            foreach (var i in GetFibonacchiNumber())
+            foreach (var i in TakeWhile(GetFibonacchiNumber(), x => x < limit))
             {
-                if (i < limit)
+                if (i % 2 == 0)
                 {
-                    if (i % 2 == 0)
-                    {
-                        sum += i;
-                    }
-                }
-                else
-                {
-                    break;
+                    sum += i;
                 }
             }
             return sum;
@@ -100,6 +86,27 @@ namespace LinqStudyCS
                 var temp = a;
                 a = b;
                 b = a + temp;
+            }
+        }
+
+        /// <summary>
+        /// 終了条件を設定するメソッド
+        /// </summary>
+        /// <param name="source">元数列</param>
+        /// <param name="predicate">終了条件</param>
+        /// <returns>終了条件が設定された数列</returns>
+        public static IEnumerable<int> TakeWhile(IEnumerable<int> source, Func<int, bool> predicate)
+        {
+            foreach (var i in source)
+            {
+                if (predicate(i))
+                {
+                    yield return i;
+                }
+                else
+                {
+                    break;
+                }
             }
         }
     }

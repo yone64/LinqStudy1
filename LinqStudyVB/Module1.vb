@@ -15,13 +15,9 @@
     ''' <remarks></remarks>
     Public Function Problem1(ByVal limit As Integer) As Integer
         Dim sum As Integer = 0
-        For Each i In GetNaturalNumber()
-            If i < limit Then
-                If i Mod 3 = 0 OrElse i Mod 5 = 0 Then
-                    sum += i
-                End If
-            Else
-                Exit For
+        For Each i In TakeWhile(GetNaturalNumber(), Function(x) x < limit)
+            If i Mod 3 = 0 OrElse i Mod 5 = 0 Then
+                sum += i
             End If
         Next
         Return sum
@@ -38,13 +34,9 @@
     ''' <remarks></remarks>
     Public Function Problem2(ByVal limit As Integer)
         Dim sum As Integer = 0
-        For Each i In GetFibonacchi()
-            If i < limit Then
-                If i Mod 2 = 0 Then
-                    sum += i
-                End If
-            Else
-                Exit For
+        For Each i In TakeWhile(GetFibonacchi(), Function(x) x < limit)
+            If i Mod 2 = 0 Then
+                sum += i
             End If
         Next
         Return sum
@@ -79,5 +71,20 @@
         End While
     End Function
 
-
+    ''' <summary>
+    ''' 終了条件を設定するメソッド
+    ''' </summary>
+    ''' <param name="source">元数列</param>
+    ''' <param name="predicate">終了条件</param>
+    ''' <returns>終了条件が設定された数列</returns>
+    ''' <remarks></remarks>
+    Public Iterator Function TakeWhile(source As IEnumerable(Of Integer), predicate As Func(Of Integer, Boolean)) As IEnumerable(Of Integer)
+        For Each i In source
+            If predicate(i) Then
+                Yield i
+            Else
+                Exit For
+            End If
+        Next
+    End Function
 End Module
