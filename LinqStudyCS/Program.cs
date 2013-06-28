@@ -25,12 +25,10 @@ namespace LinqStudyCS
         public static int Problem1(int limit)
         {
             int sum = 0;
-            foreach (var i in TakeWhile(GetNaturalNumber(), x => x < limit))
+            var source = Where(TakeWhile(GetNaturalNumber(), x => x < limit), y => y % 3 == 0 || y % 5 == 0);
+            foreach (var i in source)
             {
-                if (i % 3 == 0 || i % 5 == 0)
-                {
-                    sum += i;
-                }
+                sum += i;
             }
             return sum;
 
@@ -47,12 +45,10 @@ namespace LinqStudyCS
         public static int Problem2(int limit)
         {
             int sum = 0;
-            foreach (var i in TakeWhile(GetFibonacchiNumber(), x => x < limit))
+            var source = Where(TakeWhile(GetFibonacchiNumber(), x => x < limit), y => y % 2 == 0);
+            foreach (var i in source)
             {
-                if (i % 2 == 0)
-                {
-                    sum += i;
-                }
+                sum += i;
             }
             return sum;
 
@@ -106,6 +102,23 @@ namespace LinqStudyCS
                 else
                 {
                     break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 抽出条件を設定するメソッド
+        /// </summary>
+        /// <param name="source">元数列</param>
+        /// <param name="predicate">抽出条件</param>
+        /// <returns>抽出条件が設定された数列</returns>
+        public static IEnumerable<int> Where(IEnumerable<int> source, Func<int, bool> predicate)
+        {
+            foreach (var i in source)
+            {
+                if (predicate(i))
+                {
+                    yield return i;
                 }
             }
         }

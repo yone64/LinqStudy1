@@ -15,10 +15,9 @@
     ''' <remarks></remarks>
     Public Function Problem1(ByVal limit As Integer) As Integer
         Dim sum As Integer = 0
-        For Each i In TakeWhile(GetNaturalNumber(), Function(x) x < limit)
-            If i Mod 3 = 0 OrElse i Mod 5 = 0 Then
-                sum += i
-            End If
+        Dim source = Where(TakeWhile(GetNaturalNumber(), Function(x) x < limit), Function(y) y Mod 3 = 0 OrElse y Mod 5 = 0)
+        For Each i In source
+            sum += i
         Next
         Return sum
     End Function
@@ -34,10 +33,9 @@
     ''' <remarks></remarks>
     Public Function Problem2(ByVal limit As Integer)
         Dim sum As Integer = 0
-        For Each i In TakeWhile(GetFibonacchi(), Function(x) x < limit)
-            If i Mod 2 = 0 Then
-                sum += i
-            End If
+        Dim source = Where(TakeWhile(GetFibonacchi(), Function(x) x < limit), Function(y) y Mod 2 = 0)
+        For Each i In source
+            sum += i
         Next
         Return sum
     End Function
@@ -84,6 +82,21 @@
                 Yield i
             Else
                 Exit For
+            End If
+        Next
+    End Function
+
+    ''' <summary>
+    ''' 抽出条件を設定するメソッド
+    ''' </summary>
+    ''' <param name="source">元数列</param>
+    ''' <param name="predicate">抽出条件</param>
+    ''' <returns>抽出条件が設定された数列</returns>
+    ''' <remarks></remarks>
+    Public Iterator Function Where(source As IEnumerable(Of Integer), predicate As Func(Of Integer, Boolean)) As IEnumerable(Of Integer)
+        For Each i In source
+            If predicate(i) Then
+                Yield i
             End If
         Next
     End Function
