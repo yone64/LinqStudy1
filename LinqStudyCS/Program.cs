@@ -24,14 +24,7 @@ namespace LinqStudyCS
         /// <returns>答え</returns>
         public static int Problem1(int limit)
         {
-            int sum = 0;
-            var source = Where(TakeWhile(GetNaturalNumber(), x => x < limit), y => y % 3 == 0 || y % 5 == 0);
-            foreach (var i in source)
-            {
-                sum += i;
-            }
-            return sum;
-
+            return Sum(Where(TakeWhile(GetNaturalNumber(), x => x < limit), y => y % 3 == 0 || y % 5 == 0));
         }
 
         // http://odz.sakura.ne.jp/projecteuler/index.php?cmd=read&page=Problem%202
@@ -44,14 +37,7 @@ namespace LinqStudyCS
         /// <returns>答え</returns>
         public static int Problem2(int limit)
         {
-            int sum = 0;
-            var source = Where(TakeWhile(GetFibonacchiNumber(), x => x < limit), y => y % 2 == 0);
-            foreach (var i in source)
-            {
-                sum += i;
-            }
-            return sum;
-
+            return Sum(Where(TakeWhile(GetFibonacchiNumber(), x => x < limit), y => y % 2 == 0));
         }
 
         /// <summary>
@@ -121,6 +107,21 @@ namespace LinqStudyCS
                     yield return i;
                 }
             }
+        }
+
+        /// <summary>
+        /// 合計を求めるメソッド
+        /// </summary>
+        /// <param name="source">元数列</param>
+        /// <returns>合計</returns>
+        public static int Sum(IEnumerable<int> source)
+        {
+            int sum = 0;
+            foreach (var i in source)
+            {
+                sum += i;
+            }
+            return sum;
         }
     }
 }

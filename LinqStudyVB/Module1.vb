@@ -14,12 +14,7 @@
     ''' <returns>答え</returns>
     ''' <remarks></remarks>
     Public Function Problem1(ByVal limit As Integer) As Integer
-        Dim sum As Integer = 0
-        Dim source = Where(TakeWhile(GetNaturalNumber(), Function(x) x < limit), Function(y) y Mod 3 = 0 OrElse y Mod 5 = 0)
-        For Each i In source
-            sum += i
-        Next
-        Return sum
+        Return Sum(Where(TakeWhile(GetNaturalNumber(), Function(x) x < limit), Function(y) y Mod 3 = 0 OrElse y Mod 5 = 0))
     End Function
 
     '' http://odz.sakura.ne.jp/projecteuler/index.php?cmd=read&page=Problem%202
@@ -32,12 +27,7 @@
     ''' <returns>答え</returns>
     ''' <remarks></remarks>
     Public Function Problem2(ByVal limit As Integer)
-        Dim sum As Integer = 0
-        Dim source = Where(TakeWhile(GetFibonacchi(), Function(x) x < limit), Function(y) y Mod 2 = 0)
-        For Each i In source
-            sum += i
-        Next
-        Return sum
+        Return Sum(Where(TakeWhile(GetFibonacchi(), Function(x) x < limit), Function(y) y Mod 2 = 0))
     End Function
 
     ''' <summary>
@@ -99,5 +89,19 @@
                 Yield i
             End If
         Next
+    End Function
+
+    ''' <summary>
+    ''' 合計を求めるメソッド
+    ''' </summary>
+    ''' <param name="source">元数列</param>
+    ''' <returns>合計</returns>
+    ''' <remarks></remarks>
+    Public Function Sum(source As IEnumerable(Of Integer)) As Integer
+        Dim sum_ As Integer = 0
+        For Each i In source
+            sum_ += i
+        Next
+        Return sum_
     End Function
 End Module
