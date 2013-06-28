@@ -14,7 +14,10 @@
     ''' <returns>答え</returns>
     ''' <remarks></remarks>
     Public Function Problem1(ByVal limit As Integer) As Integer
-        Return Sum(Where(TakeWhile(GetNaturalNumber(), Function(x) x < limit), Function(y) y Mod 3 = 0 OrElse y Mod 5 = 0))
+        Return GetNaturalNumber().
+            TakeWhile(Function(x) x < limit).
+            Where(Function(y) y Mod 3 = 0 OrElse y Mod 5 = 0).
+            Sum()
     End Function
 
     '' http://odz.sakura.ne.jp/projecteuler/index.php?cmd=read&page=Problem%202
@@ -27,7 +30,10 @@
     ''' <returns>答え</returns>
     ''' <remarks></remarks>
     Public Function Problem2(ByVal limit As Integer)
-        Return Sum(Where(TakeWhile(GetFibonacchi(), Function(x) x < limit), Function(y) y Mod 2 = 0))
+        Return GetFibonacchi().
+            TakeWhile(Function(x) x < limit).
+            Where(Function(y) y Mod 2 = 0).
+            Sum()
     End Function
 
     ''' <summary>
@@ -66,6 +72,7 @@
     ''' <param name="predicate">終了条件</param>
     ''' <returns>終了条件が設定された数列</returns>
     ''' <remarks></remarks>
+    <Runtime.CompilerServices.Extension()> _
     Public Iterator Function TakeWhile(source As IEnumerable(Of Integer), predicate As Func(Of Integer, Boolean)) As IEnumerable(Of Integer)
         For Each i In source
             If predicate(i) Then
@@ -83,6 +90,7 @@
     ''' <param name="predicate">抽出条件</param>
     ''' <returns>抽出条件が設定された数列</returns>
     ''' <remarks></remarks>
+    <Runtime.CompilerServices.Extension()> _
     Public Iterator Function Where(source As IEnumerable(Of Integer), predicate As Func(Of Integer, Boolean)) As IEnumerable(Of Integer)
         For Each i In source
             If predicate(i) Then
@@ -97,6 +105,7 @@
     ''' <param name="source">元数列</param>
     ''' <returns>合計</returns>
     ''' <remarks></remarks>
+    <Runtime.CompilerServices.Extension()> _
     Public Function Sum(source As IEnumerable(Of Integer)) As Integer
         Dim sum_ As Integer = 0
         For Each i In source

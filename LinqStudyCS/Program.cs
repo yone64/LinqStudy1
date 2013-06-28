@@ -24,7 +24,10 @@ namespace LinqStudyCS
         /// <returns>答え</returns>
         public static int Problem1(int limit)
         {
-            return Sum(Where(TakeWhile(GetNaturalNumber(), x => x < limit), y => y % 3 == 0 || y % 5 == 0));
+            return GetNaturalNumber()
+                    .TakeWhile(x => x < limit)
+                    .Where(y => y % 3 == 0 || y % 5 == 0)
+                    .Sum();
         }
 
         // http://odz.sakura.ne.jp/projecteuler/index.php?cmd=read&page=Problem%202
@@ -37,7 +40,10 @@ namespace LinqStudyCS
         /// <returns>答え</returns>
         public static int Problem2(int limit)
         {
-            return Sum(Where(TakeWhile(GetFibonacchiNumber(), x => x < limit), y => y % 2 == 0));
+            return GetFibonacchiNumber()
+                    .TakeWhile(x => x < limit)
+                    .Where(y => y % 2 == 0)
+                    .Sum();
         }
 
         /// <summary>
@@ -71,13 +77,20 @@ namespace LinqStudyCS
             }
         }
 
+    }
+
+    /// <summary>
+    /// 拡張メソッドを定義するクラス
+    /// </summary>
+    static class ExtentionMethods
+    {
         /// <summary>
         /// 終了条件を設定するメソッド
         /// </summary>
         /// <param name="source">元数列</param>
         /// <param name="predicate">終了条件</param>
         /// <returns>終了条件が設定された数列</returns>
-        public static IEnumerable<int> TakeWhile(IEnumerable<int> source, Func<int, bool> predicate)
+        public static IEnumerable<int> TakeWhile(this IEnumerable<int> source, Func<int, bool> predicate)
         {
             foreach (var i in source)
             {
@@ -98,7 +111,7 @@ namespace LinqStudyCS
         /// <param name="source">元数列</param>
         /// <param name="predicate">抽出条件</param>
         /// <returns>抽出条件が設定された数列</returns>
-        public static IEnumerable<int> Where(IEnumerable<int> source, Func<int, bool> predicate)
+        public static IEnumerable<int> Where(this IEnumerable<int> source, Func<int, bool> predicate)
         {
             foreach (var i in source)
             {
@@ -114,7 +127,7 @@ namespace LinqStudyCS
         /// </summary>
         /// <param name="source">元数列</param>
         /// <returns>合計</returns>
-        public static int Sum(IEnumerable<int> source)
+        public static int Sum(this IEnumerable<int> source)
         {
             int sum = 0;
             foreach (var i in source)
@@ -123,5 +136,6 @@ namespace LinqStudyCS
             }
             return sum;
         }
+
     }
 }
