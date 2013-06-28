@@ -15,9 +15,13 @@
     ''' <remarks></remarks>
     Public Function Problem1(ByVal limit As Integer) As Integer
         Dim sum As Integer = 0
-        For i = 0 To limit - 1
-            If i Mod 3 = 0 OrElse i Mod 5 = 0 Then
-                sum += i
+        For Each i In GetNaturalNumber()
+            If i < limit Then
+                If i Mod 3 = 0 OrElse i Mod 5 = 0 Then
+                    sum += i
+                End If
+            Else
+                Exit For
             End If
         Next
         Return sum
@@ -33,18 +37,47 @@
     ''' <returns>答え</returns>
     ''' <remarks></remarks>
     Public Function Problem2(ByVal limit As Integer)
-        Dim sum = 0
-        Dim a = 1
-        Dim b = 1
-        While b < limit
-            If b Mod 2 = 0 Then
-                sum += b
+        Dim sum As Integer = 0
+        For Each i In GetFibonacchi()
+            If i < limit Then
+                If i Mod 2 = 0 Then
+                    sum += i
+                End If
+            Else
+                Exit For
             End If
-            Dim temp = a
-            a = b
-            b = a + temp
-        End While
+        Next
         Return sum
     End Function
+
+    ''' <summary>
+    ''' 自然数を返すメソッド
+    ''' </summary>
+    ''' <returns>列挙可能な自然数</returns>
+    ''' <remarks></remarks>
+    Public Iterator Function GetNaturalNumber() As IEnumerable(Of Integer)
+        Dim i As Integer = 0
+        While True
+            i = i + 1
+            Yield i
+        End While
+    End Function
+
+    ''' <summary>
+    ''' フィボナッチ数列を返すメソッド
+    ''' </summary>
+    ''' <returns>列挙可能なフィボナッチ数列</returns>
+    ''' <remarks></remarks>
+    Public Iterator Function GetFibonacchi() As IEnumerable(Of Integer)
+        Dim a = 1
+        Dim b = 1
+        While True
+            Yield b
+            Dim temp = a
+            a = b
+            b += temp
+        End While
+    End Function
+
 
 End Module

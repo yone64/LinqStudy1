@@ -25,15 +25,22 @@ namespace LinqStudyCS
         public static int Problem1(int limit)
         {
             int sum = 0;
-            for (int i = 0; i < limit; i++)
+            foreach (var i in GetNaturalNumber())
             {
-                if (i % 3 == 0 || i % 5 == 0)
+                if (i < limit)
                 {
-                    sum += i;
+                    if (i % 3 == 0 || i % 5 == 0)
+                    {
+                        sum += i;
+                    }
+                }
+                else
+                {
+                    break;
                 }
             }
-
             return sum;
+
         }
 
         // http://odz.sakura.ne.jp/projecteuler/index.php?cmd=read&page=Problem%202
@@ -47,22 +54,53 @@ namespace LinqStudyCS
         public static int Problem2(int limit)
         {
             int sum = 0;
+            foreach (var i in GetFibonacchiNumber())
+            {
+                if (i < limit)
+                {
+                    if (i % 2 == 0)
+                    {
+                        sum += i;
+                    }
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return sum;
 
+        }
+
+        /// <summary>
+        /// 自然数を返すメソッド
+        /// </summary>
+        /// <returns>列挙可能な自然数</returns>
+        public static IEnumerable<int> GetNaturalNumber()
+        {
+            int i = 0;
+            while (true)
+            {
+                yield return ++i;
+            }
+        }
+
+        /// <summary>
+        /// フィボナッチ数列を返すメソッド
+        /// </summary>
+        /// <returns>列挙可能なフィボナッチ数列</returns>
+        public static IEnumerable<int> GetFibonacchiNumber()
+        {
             int a = 1;
             int b = 1;
-            while (b < limit)
+            while (true)
             {
-                if (b % 2 == 0)
-                {
-                    sum += b;
-                }
+                yield return b;
 
                 var temp = a;
                 a = b;
                 b = a + temp;
             }
-
-            return sum;
         }
     }
 }
